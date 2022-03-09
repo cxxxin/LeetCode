@@ -22,7 +22,7 @@ public:
 
         while (l<r)
         {
-            int v = min(height[l],height[r]*(r-l));
+            int v = min(height[l],height[r])*(r-l);
             ans = max(ans, v);
 
             if(height[l]<=height[r]){ // 之后l再怎么右移，都会比当前的v更小
@@ -40,7 +40,7 @@ public:
 
 int main(){
     Solution s;
-    vector<int> example = [1,8,6,2,5,4,8,3,7];
+    vector<int> example = {1,8,6,2,5,4,8,3,7};
     int result = s.maxArea(example);
     cout<<result<<endl;
     system("pause");
