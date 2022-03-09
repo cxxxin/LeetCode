@@ -1,6 +1,5 @@
 #include <iostream>
-#include <string>
-#include <climits>
+#include <cmath>
 #include <vector>
 
 using namespace std;
@@ -17,17 +16,23 @@ class Solution {
 public:
     int maxArea(vector<int>& height) {
         int ans = 0;
+        
+        int l = 0;
+        int r = height.size()-1;
 
-        // 开辟一个数组来记录每个组合的盛水量
-        vector<vector<int>> v;
-        for(int i=0;i<height.size()-1;i++){
-            for(int j=i+1;j<height.size();j++){
-                v[i][j] = (j-1)*max(height[i],height[j]);
+        while (l<r)
+        {
+            int v = min(height[l],height[r]*(r-l));
+            ans = max(ans, v);
+
+            if(height[l]<=height[r]){ // 之后l再怎么右移，都会比当前的v更小
+                l++;
+            }
+            else{ // 之后r再怎么左移，都会比当前的v更小
+                r--;
             }
         }
-
-        ans = max(v);
-
+        
         return ans;
     }
 };
@@ -35,7 +40,8 @@ public:
 
 int main(){
     Solution s;
-    int result = s.maxArea([1,8,6,2,5,4,8,3,7]);
+    vector<int> example = [1,8,6,2,5,4,8,3,7];
+    int result = s.maxArea(example);
     cout<<result<<endl;
     system("pause");
     return 0;
