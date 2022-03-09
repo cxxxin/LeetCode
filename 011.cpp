@@ -18,6 +18,16 @@ public:
     int maxArea(vector<int>& height) {
         int ans = 0;
 
+        // 开辟一个数组来记录每个组合的盛水量
+        vector<vector<int>> v;
+        for(int i=0;i<height.size()-1;i++){
+            for(int j=i+1;j<height.size();j++){
+                v[i][j] = (j-1)*max(height[i],height[j]);
+            }
+        }
+
+        ans = max(v);
+
         return ans;
     }
 };
@@ -25,7 +35,7 @@ public:
 
 int main(){
     Solution s;
-    int result = s.maxArea({2,3,5}});
+    int result = s.maxArea([1,8,6,2,5,4,8,3,7]);
     cout<<result<<endl;
     system("pause");
     return 0;
