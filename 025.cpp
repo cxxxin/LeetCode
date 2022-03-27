@@ -29,7 +29,7 @@ public:
     pair<ListNode*, ListNode*> myReverse(ListNode* head, ListNode* tail) {
         ListNode* prev = tail->next;
         ListNode* p = head;
-        while (prev != tail) { // 中间相遇
+        while (prev != tail) { // tail不变，p从前往后  prev从后往前
             ListNode* nex = p->next; //swap
             p->next = prev;
             prev = p;
@@ -38,7 +38,7 @@ public:
         return {tail, head};
     }
 
-    ListNode* reverseKGroup(ListNode* head, int k) {
+    ListNode* reverseKGroup2(ListNode* head, int k) {
         ListNode* hair = new ListNode(0);
         hair->next = head;
         ListNode* pre = hair;
@@ -66,6 +66,47 @@ public:
         }
 
         return hair->next;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode* fakeHead = new ListNode(0,head);
+        ListNode* pre = fakeHead; // 每次迭代时的头结点的上一个节点
+        while (head) // 判断当前的head是否为空
+        {
+            // 是否还有k个节点
+            ListNode* tail = pre;
+            for (int count=0; count<k; count++)
+            {
+                tail = tail->next;
+                if (!tail) // 节点为空了，一切都结束啦
+                {
+                    return fakeHead->next;
+                }
+            }
+
+            // reverse当前的前k个节点
+            ListNode* afterTail = tail->next;
+            ListNode* tailtail = tail->next;
+            ListNode* left = head;
+            while (tailtail!=tail) // 把头往尾部移，tailtail 与 tail碰上表明移动完毕
+            {
+                ListNode* temp = left->next;
+                left->next = tailtail; // 把头部接到尾部
+                tailtail = left; //最尾部固定了，所以指针往前移
+                left = temp; // left始终指向当前头部
+            }
+
+            // 把reverse后的链表接回原链表
+            head->next = afterTail;
+            pre->next = tail;
+
+            // 迭代
+            pre = head;
+            head = head->next;
+        }
+        
+
+        return fakeHead->next;
     }
 };
 
