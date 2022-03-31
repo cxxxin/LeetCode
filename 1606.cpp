@@ -27,7 +27,8 @@ using namespace std;
 
 /*
 思路：
-    维护一个服务器状态列表，记录服务器还有多久进入空闲状态
+    维护一个服务器busy优先队列，记录服务器还有多久进入空闲状态
+    维护一个服务器的available优先队列，
     维护一个任务数量列表，记录每个服务器完成过的任务数量
 */
 
@@ -35,51 +36,36 @@ class Solution {
 public:
     vector<int> busiestServers(int k, vector<int>& arrival, vector<int>& load) {
         vector<int> ans;
-        vector<int> state(k);
+        priority_queue<int, vector<int>, greater<int>> available; // 优先队列，int为数据类型，vector为保存数据的容器，升序队列，小顶堆
         vector<int> count(k);
 
-        for (int i = 0; i < k; i++) // init
-        {
-           state[i] = 0;
-           count[i] = 0;
+        // init
+         for (int i = 0; i < k; i++) {
+            available.push(i);
         }
+        // 这里的pair存储的是<结束时间,server id,>，默认以key也就是结束时间为排序依据
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> busy;
         
         for (int i = 0; i < arrival.size(); i++)
         {
-            // 更新服务器的状态
-            for (int j = 0; j < k; j++)
-            {
-                if (i==0) // 首轮不需要初始化
-                {
-                    break;
-                }
-
-                if (state[j] == 0)
-                {
-                    continue;
-                }
-                
-                if (state[j] > arrival[i]-arrival[i-1] ){
-                    state[j] -= arrival[i]-arrival[i-1];
-                    continue;
-                }
-                state[j] = 0;
+            // 更新服务器的状态，看看有无busy的服务器变空闲
+            while (!busy.empty() && busy.top().first <= arrival[i]) {
+                auto[_, id] = busy.top();
+                busy.pop();
+                available.push(i + ((id - i) % k + k) % k); // 保证得到的是一个不小于 i 的且与 id 同余的数
             }
             
-            //  有任务 需要找空闲的服务器
-            int j = i;
-            while (state[j%k] != 0 && j<i+k) 
-            {
-                j++;
-            }
-            if (j >= i+k) // 没有空闲的服务器
-            {
+            // 没有空闲的服务器
+            if (available.empty()) {
                 continue;
             }
-            
-            j %= k;
-            state[j] = load[i];
-            count[j]++;
+
+            // 找空闲的服务器
+            int id = available.top() % k;
+            available.pop();
+            count[id]++;
+            busy.push({arrival[i] + load[i], id});
+
         }
 
         // 找最大
