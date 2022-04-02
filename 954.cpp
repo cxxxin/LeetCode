@@ -26,7 +26,7 @@ public:
         for (auto &[x, _] : cnt) {
             vals.push_back(x); // 把存在的数存在vals里
         }
-        sort(vals.begin(), vals.end(), [](int a, int b) { return abs(a) < abs(b); });
+        sort(vals.begin(), vals.end(), [](int a, int b) { return abs(a) < abs(b); }); // 重载了比较的方法，只比较绝对值
 
         for (int x : vals) {
             if (cnt[2 * x] < cnt[x]) { // 无法找到足够的 2x 与 x 配对
