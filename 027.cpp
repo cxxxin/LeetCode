@@ -21,7 +21,35 @@ using namespace std;
 class Solution {
 public:
     int removeElement(vector<int>& nums, int val) {
+        int left = 0;
+        int right = nums.size()-1;
+        if (left == right)
+        {
+            return nums[0]==val?0:1;
+        }
+        
 
+        while (left<right){
+            // left找到第一个值是val的位置
+            while (nums[left]!=val && left<right){
+                left++;
+            }
+            // right找到最后一个不是val的位置
+            while (nums[right]==val && left<right){
+                right--;
+            }
+            
+            // 交换left right位置的元素
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+        }
+        if (right == 0)
+            return 0;
+        if (left == nums.size()-1 && nums[left] != val)
+            return nums.size();
+
+        return left;
     }
 };
 
