@@ -12,10 +12,17 @@ using namespace std;
 
 */
 
+/*
+思路：
+    滑动窗口
+*/
+
 class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
-
+        for(char c:s){
+            
+        }
     }
 };
 
