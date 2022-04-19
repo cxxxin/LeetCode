@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include <algorithm>
 using namespace std;
 
 /*
@@ -23,12 +23,24 @@ using namespace std;
 
 /*
 思路：
+    由于对空间的限制，我们无法先对所有nums排序
 */
 
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
-
+        int small = nums.size()-2; // 倒数第二个元素
+        while (small>=0 && nums[small]>=nums[small+1]){
+            small--;
+        }
+        if(small>=0){ // 本身不是最大序列
+            int large = nums.size()-1; // 倒数第一个元素
+            while (nums[large]<=nums[small]){
+                large--;
+            }
+            swap(nums[small],nums[large]); // 交换
+        }
+        reverse(nums.begin()+small+1,nums.end());// sort
     }
 };
 
