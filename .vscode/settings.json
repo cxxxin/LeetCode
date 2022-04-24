@@ -45,7 +45,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "climits": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "unordered_set": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
