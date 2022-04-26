@@ -40,6 +40,14 @@ public:
         }
         return ans;
     }
+
+    // 也可以动规做一做
+    int jump2(vector<int>& nums){
+        int ans = 0;
+
+
+        return ans;
+    }
 };
 
 int main(){
