@@ -3,32 +3,46 @@
 using namespace std;
 
 /*
-不同路径
+不同路径 II
 
-一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
-机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
-问总共有多少条不同的路径？
+一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
+机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。
+现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
+网格中的障碍物和空位置分别用 1 和 0 来表示。
 */
 
 /*
 思路：
-    类似于爬楼梯，明确自己的上一步有哪些可能即可，动态规划
+    动态规划，每一个坐标的路径数=是否有障碍物*（上一格的路径数+左一格的路径数）
+    
 */
 
 class Solution {
 public:
-    int uniquePaths(int m, int n) {
-        vector<vector<int>> dp(m);
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
+        vector<vector<int>> dp(m,vector<int>(n,0));
+
         for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                dp[i].push_back(1);
+            if(obstacleGrid[i][0]){ // 有障碍物
+                break;
             }
+            dp[i][0] = 1;
+        }
+        for(int j=0;j<n;j++){
+            if(obstacleGrid[0][j])
+                break;
+            dp[0][j] = 1;
         }
         for(int i=1;i<m;i++){
             for(int j=1;j<n;j++){
-                dp[i][j] = dp[i-1][j]+dp[i][j-1];
+                if(!obstacleGrid[i][j]){
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+                }
             }
         }
+
         return dp[m-1][n-1];
     }
 };
