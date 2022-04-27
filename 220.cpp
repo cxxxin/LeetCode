@@ -37,7 +37,7 @@ public:
             if(mp.count(id-1) && abs(x-mp[id-1])<=t){
                 return true;
             }
-            if(mp.count(id+1)) && abs(x-mp[id+1]<=t){
+            if(mp.count(id+1)) && abs(x-mp[id+1])<=t){
                 return true;
             }
             mp[id] = x;
