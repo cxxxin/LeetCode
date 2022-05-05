@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-
+#include <unordered_map>
 using namespace std;
 
 /*
@@ -17,7 +17,7 @@ using namespace std;
 
 /*
 思路：
-    肯定需要遍历一次，从0-i，从1-i，...i-1到i，这其中将会有很多被重复使用的信息。
+    sum[i][j] = sum[0][j] - sum[0][i-1];
     同余定理
 */
 
@@ -32,14 +32,14 @@ public:
         mp[0] = -1;
         int remainder = 0;
         for (int i = 0; i < m; i++) {
-            remainder = (remainder + nums[i]) % k;
+            remainder = (remainder + nums[i]) % k; // 从头到第i个元素为止的模k余数
             if (mp.count(remainder)) {
-                int prevIndex = mp[remainder];
+                int prevIndex = mp[remainder]; // 出现了同余的情况
                 if (i - prevIndex >= 2) {
                     return true;
                 }
             } else {
-                mp[remainder] = i;
+                mp[remainder] = i; // 记录坐标
             }
         }
         return false;
