@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 using namespace std;
 
 /*
@@ -8,6 +9,8 @@ using namespace std;
 */
 
 /*
+思路：
+    分别dfs/bfs两边两棵子树（不同的方向）
 */
 
 // Definition for a binary tree node.
@@ -23,8 +26,15 @@ struct TreeNode {
 
 class Solution {
 public:
-    bool isSymmetric(TreeNode* root) {
+    bool check(TreeNode *p, TreeNode *q) {
+        if (!p && !q) return true; // 两边的子树为空
+        if (!p || !q) return false; // 仅有一边为空
+        return p->val == q->val && check(p->left, q->right) && check(p->right, q->left);
+    }
 
+    bool isSymmetric(TreeNode* root) {
+        if(!root) return true;
+        return check(root->left,root->right);
     }
 };
 
