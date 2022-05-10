@@ -8,6 +8,8 @@ using namespace std;
 */
 
 /*
+思路：
+    递归，对每个子树都翻转
 */
 
 // Definition for a binary tree node.
@@ -23,7 +25,12 @@ struct TreeNode {
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
-
+        if(!root) return nullptr;
+        TreeNode* left = invertTree(root->left);
+        TreeNode* right = invertTree(root->right);
+        root->left = right;
+        root->right = left;
+        return root;
     }
 };
 
