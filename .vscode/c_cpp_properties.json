@@ -10,9 +10,9 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "D:\\programfiles\\MinGw\\bin\\gcc.exe",
+            "compilerPath": "D:/programfiles/MinGw/bin/g++.exe",
             "cStandard": "gnu17",
-            "cppStandard": "gnu++14",
+            "cppStandard": "c++11",
             "intelliSenseMode": "windows-gcc-x86"
         }
     ],
