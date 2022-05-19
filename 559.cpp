@@ -12,6 +12,8 @@ N 叉树输入按层序遍历序列化表示，每组子节点由空值分隔（
 */
 
 /*
+思路：
+    dfs
 */
 
 // Definition for a Node.
@@ -35,7 +37,15 @@ public:
 class Solution {
 public:
     int maxDepth(Node* root) {
-        
+        if(!root) return 0;
+        if(root->children.empty()) return 1;
+
+        int n = root->children.size();
+        int height = 0;
+        for(Node* child:root->children){
+            height = max(height,maxDepth(child)+1);
+        }
+        return height;
     }
 };
 
