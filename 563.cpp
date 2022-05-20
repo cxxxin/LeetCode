@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 /*
@@ -13,6 +14,9 @@ using namespace std;
 */
 
 /*
+思路：
+    dfs
+    对于每个节点来说，都是要returnroot的坡度+左子树的podu+右子树的坡度
 */
 
 // Definition for a binary tree node.
@@ -27,8 +31,13 @@ struct TreeNode {
 
 class Solution {
 public:
+    int getSum(TreeNode* root){
+        if(!root) return 0;
+        return root->val + getSum(root->left) + getSum(root->right);
+    }
     int findTilt(TreeNode* root) {
-
+        if(!root) return 0;
+        return abs(getSum(root->left)-getSum(root->right)) + findTilt(root->left) + findTilt(root->right);
     }
 };
 
