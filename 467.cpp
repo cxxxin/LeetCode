@@ -35,8 +35,8 @@ public:
             }
             dp[p[i]-'a'] = max(dp[p[i]-'a'],k);
         }
+        return accumulate(dp.begin(),dp.end(),0);
     }
-    return accumulate(dp.begin(),dp.end(),0);
 };
 
 int main(){
