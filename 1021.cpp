@@ -20,7 +20,7 @@ public:
             if(c==')'){
                 st.pop();
             }
-            if(!st.empty()){ // 不是原语
+            if(!st.empty()){ // 不是最外层
                 ans.push_back(c);
             }
             if(c=='('){
