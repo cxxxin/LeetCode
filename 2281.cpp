@@ -9,13 +9,22 @@ using namespace std;
 /*
 思路：
     dp
-    可重用的部分：1可以推广到12,12可推广到123
+    可重用的部分：
 */
 
 class Solution {
 public:
     int totalStrength(vector<int>& strength) {
+        int n = strength.size();
+        long long ans = 0;
         
+        // dp
+        int sum = 0;
+        int minimal = INT32_MAX;
+        for(int i=0;i<n;i++){
+            sum = 0;
+        }
+        return ans;
     }
 };
 
