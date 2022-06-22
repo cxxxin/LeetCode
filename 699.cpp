@@ -43,7 +43,7 @@ public:
     vector<int> fallingSquares(vector<vector<int>>& positions) {
         int n = positions.size(); // 方块的个数
         vector<int> ans(n);
-        map<int,int> heightMap; // key:start from 方块key     value:所有数轴上的点的堆叠高度
+        map<int,int> heightMap; // 用 heightMap 记录每一个相对于前一个点而言，堆叠高度发生变化的点
         heightMap[0] = 0;
         for(int i=0;i<n;i++){
             int size = positions[i][1]; // current size
@@ -81,7 +81,7 @@ struct Node{
 
 class Solution3 {
 private:
-    int N = 1e9;
+    int N = (int)1e9;
     Node* root = new Node();
 public:
     void pushup(Node* node){
@@ -103,7 +103,7 @@ public:
 
         node->ls->val = node->add;
         node->rs->val = node->add; // 继承区间的最大高度
-        node->add = 0;
+        node->add = 0; // 删除懒标记
     }
 
     void update(Node* node, int lc, int rc, int l, int r, int v){ // v 代表[l,r]区间的最大高度
@@ -116,6 +116,8 @@ public:
         int mid = (lc + rc) >> 1;
         if(l <= mid){
             update(node->ls,lc,mid,l,r,v);
+        }
+        if(r>mid){
             update(node->rs,mid+1,rc,l,r,v);
         }
         pushup(node);
