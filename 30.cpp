@@ -25,8 +25,8 @@ class Solution {
 public:
     vector<int> findSubstring(string s, vector<string>& words) {
         vector<int> ans;
-        unordered_map<string,int> record;
-        unordered_map<string,int> wordsSet;
+        unordered_map<string,int> record; // 记录使用的单词和对应的个数
+        unordered_map<string,int> wordsSet; // 记录每个单词的个数
         for(string word:words){ // 初始化
             wordsSet[word]++;
         }
