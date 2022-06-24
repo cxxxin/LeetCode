@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 /*
@@ -11,12 +12,26 @@ using namespace std;
 */
 
 /*
+思路：
+    枚举分割的位置
 */
 
 class Solution {
 public:
     int minFlipsMonoIncr(string s) {
+        int n = s.size();
+        int ans = n;
+        vector<int> preSum(n+1,0);
+        for(int i=1;i<=n;i++){
+            preSum[i] = preSum[i-1] + (s[i-1]-'0'); // 1的个数
+        }
 
+        for(int i=1;i<=n;i++){ // 分割处
+            int rCnt = n - i - (preSum[n] - preSum[i]);
+            ans = min(ans, preSum[i-1] + rCnt);
+        }
+
+        return ans;
     }
 };
 
