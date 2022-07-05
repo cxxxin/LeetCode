@@ -45,12 +45,12 @@ public:
 
     bool query(Node* node, int l, int r, int ls, int rs){
         if(l<=ls && r>= rs){
-            return node->val;
+            return node->val>0;
         }
         pushdown(node, rs-ls);
         int mid = (ls + rs) >> 1;
         bool ans = false;
-        if(l<=mid)
+        if(l<mid)
             ans = ans || query(node->ls, l, r, ls, mid);
         if(r>mid)
             ans = ans || query(node->rs, l, r, mid, rs);
@@ -66,7 +66,7 @@ public:
 
         pushdown(node, rs-ls);
         int mid = (ls + rs) >> 1;
-        if(l<=mid)
+        if(l<mid)
             update(node->ls, l, r, ls, mid, add);
         if(r>mid)
             update(node->rs, l, r, mid, rs, add);
