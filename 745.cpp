@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
 /*
@@ -18,17 +19,32 @@ f(string pref, string suff) 返回词典中具有前缀 prefix 和后缀 suff�
 
 /*
 思路：
-    
+    暴力
 */
 
 class WordFilter {
+private:
+    unordered_map<string, int> dict;
 public:
     WordFilter(vector<string>& words) {
+        for (int i = 0; i < words.size(); i++) {
+            int m = words[i].size();
+            string word = words[i];
+            for (int prefixLength = 1; prefixLength <= m; prefixLength++) {
+                for (int suffixLength = 1; suffixLength <= m; suffixLength++) {
+                    string key = word.substr(0, prefixLength) + '#' + word.substr(m - suffixLength);
+                    dict[key] = i;
+                }
+            }
+        }
     }
-
+    
     int f(string pref, string suff) {
+        string target = pref + '#' + suff;
+        return dict.count(target) ? dict[target] : -1;
     }
 };
+
 
 int main(){
     return 0;
