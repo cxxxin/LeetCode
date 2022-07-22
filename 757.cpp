@@ -40,8 +40,8 @@ public:
             return a[0] < b[0];
         });
         vector<vector<int>> temp(n);
-        for (int i = n - 1; i >= 0; i--) {
-            for (int j = intervals[i][0], k = temp[i].size(); k < m; j++, k++) {
+        for (int i = n - 1; i >= 0; i--) { // 从后往前遍历
+            for (int j = intervals[i][0], k = temp[i].size(); k < m; j++, k++) { // j为区间的左端
                 res++;
                 help(intervals, temp, i - 1, j);
             }
