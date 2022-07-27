@@ -9,11 +9,13 @@ using namespace std;
 /*
 思路：
     数据结构题
+    空间换时间
 */
 
-constexpr int MAX_LEVEL = 32;
+constexpr int MAX_LEVEL = 32; // 最多32层
 constexpr double P_FACTOR = 0.25;
 
+// 每个sliplistNode都有一串指针指向自己的右节点和下层节点，有一个int整形表示该节点的值
 struct SkiplistNode {
     int val;
     vector<SkiplistNode *> forward;
@@ -24,8 +26,8 @@ struct SkiplistNode {
 
 class Skiplist {
 private:
-    SkiplistNode * head;
-    int level;
+    SkiplistNode * head; // 像所有链表一样有个头结点
+    int level; // 记录现在拥有的层数
     mt19937 gen{random_device{}()};
     uniform_real_distribution<double> dis;
 
@@ -36,13 +38,13 @@ public:
 
     bool search(int target) {
         SkiplistNode *curr = this->head;
-        for (int i = level - 1; i >= 0; i--) {
+        for (int i = level - 1; i >= 0; i--) { // 从上层往下找
             /* 找到第 i 层小于且最接近 target 的元素*/
             while (curr->forward[i] && curr->forward[i]->val < target) {
                 curr = curr->forward[i];
             }
         }
-        curr = curr->forward[0];
+        curr = curr->forward[0]; // 到当前节点在最底层的下一个节点
         /* 检测当前元素的值是否等于 target */
         if (curr && curr->val == target) {
             return true;
@@ -51,7 +53,7 @@ public:
     }
 
     void add(int num) {
-        vector<SkiplistNode *> update(MAX_LEVEL, head);
+        vector<SkiplistNode *> update(MAX_LEVEL, head); // 用于直接更新某一层
         SkiplistNode *curr = this->head;
         for (int i = level - 1; i >= 0; i--) {
             /* 找到第 i 层小于且最接近 num 的元素*/
@@ -60,7 +62,7 @@ public:
             }
             update[i] = curr;
         }
-        int lv = randomLevel();
+        int lv = randomLevel(); // 随机生成lv个层
         level = max(level, lv);
         SkiplistNode *newNode = new SkiplistNode(num, lv);
         for (int i = 0; i < lv; i++) {
