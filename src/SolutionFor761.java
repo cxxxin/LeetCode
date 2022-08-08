@@ -9,20 +9,21 @@ import java.util.List;
 
 public class SolutionFor761 {
     public String makeLargestSpecial(String s) {
-        if (s.length() == 0) {
+        if (s.length() == 0) { // the length of s is 0
             return "";
         }
-        List<String> list = new ArrayList<>();
-        int count = 0, last = 0;
+
+        List<String> list = new ArrayList<>(); // 存储若干互不重叠的子串
+        int count = 0, last = 0; // last表示上一次截断的位置
         for (int i = 0, cur = 0; i < s.length(); i++, cur++) {
-            if (s.charAt(i) == '1') {
+            if (s.charAt(i) == '1') { // 遇到左括号
                 count++;
-            } else {
+            } else { // 遇到右括号
                 count--;
             }
             //一组有效的括号匹配 去掉括号进行 内部排序
-            if (count == 0) {
-                String str = "1" + makeLargestSpecial(s.substring(last + 1, cur)) + "0";
+            if (count == 0) { // 凑成了n对，可以分割
+                String str = "1" + makeLargestSpecial(s.substring(last + 1, cur)) + "0"; // 掐掉头尾的1和0，对中间的子串重新组合
                 list.add(str);
                 last = cur + 1;
             }
