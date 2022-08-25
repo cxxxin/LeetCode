@@ -4,33 +4,34 @@
  */
 
 public class SolutionFor2385 {
+    class Solution {
+        int maxTime = 0;
+        int depth = -1;
+        public int amountOfTime(TreeNode root, int start) {
+            dfs(root, start, 0);
+            return maxTime;
+        }
+
+        int dfs(TreeNode node, int start, int level){
+            if (node==null)
+                return 0;
+
+            if (node.val == start) // 从这里开始
+                depth = level;
+
+            int l = dfs(node.left, start, level+1);
+            boolean inLeft = depth!=-1;
+            int r = dfs(node.right, start, level+1);
+            if (node.val==start)
+                maxTime = Math.max(maxTime, Math.max(l,r)); // 树高
+            if (inLeft)
+                maxTime = Math.max(maxTime, depth-level+r); // 右子树的树高+污染节点到当前节点的距离
+            else
+                maxTime = Math.max(maxTime, depth-level+l);
+
+            return Math.max(l,r)+1; // 树高
+        }
+    }
 }
 
-class Solution {
-    int maxTime = 0;
-    int depth = -1;
-    public int amountOfTime(TreeNode root, int start) {
-        dfs(root, start, 0);
-        return maxTime;
-    }
 
-    int dfs(TreeNode node, int start, int level){
-        if (node==null)
-            return 0;
-
-        if (node.val == start) // 从这里开始
-            depth = level;
-
-        int l = dfs(node.left, start, level+1);
-        boolean inLeft = depth!=-1;
-        int r = dfs(node.right, start, level+1);
-        if (node.val==start)
-            maxTime = Math.max(maxTime, Math.max(l,r)); // 树高
-        if (inLeft)
-            maxTime = Math.max(maxTime, depth-level+r); // 右子树的树高+污染节点到当前节点的距离
-        else
-            maxTime = Math.max(maxTime, depth-level+l);
-
-        return Math.max(l,r)+1; // 树高
-    }
-}
