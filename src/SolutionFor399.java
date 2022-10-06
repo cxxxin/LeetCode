@@ -7,7 +7,8 @@ import java.util.List;
 public class SolutionFor399 {
     class Solution {
         public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-
+            double[] res = new double[1];
+            return res;
         }
     }
 }
