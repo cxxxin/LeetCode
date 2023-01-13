@@ -9,20 +9,23 @@ import java.util.Map;
 
 public class SolutionFor3 {
     public int lengthOfLongestSubstring(String s) {
-        if (s.length()==0)
+        int n = s.length();
+        if (n == 0)
             return 0;
 
-        Map<Character, Integer> rcd = new HashMap<>();
-        int res = 0, len = s.length(), left = 0; // left记录滑动窗口的左端
+        Map<Character, Integer> map = new HashMap<>();
+        int left = 0, right = 0, start = 0, maxLen = 1;
 
-        for (int i=0;i<len;i++){
-            char curr = s.charAt(i);
-            if (rcd.containsKey(curr)){
-                left = Math.max(left, rcd.get(curr)+1);
+        while (right < n){
+            if (map.getOrDefault(s.charAt(right), -1) >= left){ // 冲突 移动左边
+                left = map.get(s.charAt(right))+1;
             }
-            rcd.put(curr, i); // 更新最新的位置
-            res = Math.max(res, i-left+1);
+            map.put(s.charAt(right), right);
+
+            maxLen = Math.max(right-left+1, maxLen);
+            right++;
         }
-        return res;
+
+        return maxLen;
     }
 }
