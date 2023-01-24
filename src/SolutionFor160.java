@@ -1,3 +1,8 @@
+/**
+ * 160. 相交链表
+ * 思路：消除两个链表的长度差
+ */
+
 public class SolutionFor160 {
     public class Solution {
         public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
